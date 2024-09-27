@@ -11,15 +11,21 @@ from english import * # ENGLISH_WORDS, is_english_word
 import random
 
 def wordle():
+    
     # The main function to play the Wordle game.
-
     def enter_action():
         # What should happen when RETURN/ENTER is pressed.
         gw.show_message("You need to implement this method")
-
-
+    
+    
+                       
     gw = WordleGWindow()
     gw.add_enter_listener(enter_action)
+    gw.set_square_letter(0, 0, "H") # Milestone 0 - print HAPPY
+    gw.set_square_letter(0, 1, "A")
+    gw.set_square_letter(0, 2, "P")
+    gw.set_square_letter(0, 3, "P")
+    gw.set_square_letter(0, 4, "Y")
 
 
 
