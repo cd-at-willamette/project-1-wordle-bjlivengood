@@ -1,5 +1,5 @@
 ########################################
-# Name:
+# Name: Milestone 1
 # Collaborators (if any):
 # GenAI Transcript (if any):
 # Estimated time spent (hr):
@@ -15,18 +15,48 @@ def wordle():
     # The main function to play the Wordle game.
     def enter_action():
         # What should happen when RETURN/ENTER is pressed.
-        gw.show_message("You need to implement this method")
+        my_letters = ""
+        row = 0
+        for i in range(0,5): 
+            letter = gw.get_square_letter(row, i) 
+            my_letters += letter  # create a word from each of the letters
+        guess = my_letters.lower() # make word lowercase
+        print(f"Guess: {guess}") # print and debug (from chatgpt)
+        
+        if guess in ENGLISH_WORDS:
+            gw.show_message("True")
+        else:
+            gw.show_message("Not in word list")
+
     
+        def word_from_row(row:int) -> str: # unfinished function
+            gw.get_square_letter(row, 0)
+            gw.get_square_letter(row, 1)
+            gw.get_square_letter(row, 2)
+            gw.get_square_letter(row, 3)
+            gw.get_square_letter(row, 4)
+            return
+
+
     
-                       
+        
+    #def color_guess(): # started on next milestone because I was annoyed
+    #      letters_left = guess
+    #        for i in range len(guess):
+     #       if guess[i] == correct [i]:
+      #          gw.set_square_color(i, col, green)
+       #         remove guess
+    #def spaces_to_underscores(s:str) -> str:
+     #   new = ""
+      #  for index in range(len(s)):
+    #        if s[index] in " ":
+    #            new += "_"
+    #        else:
+    #            new += s[index]            
+    #    return new 
+
     gw = WordleGWindow()
     gw.add_enter_listener(enter_action)
-    gw.set_square_letter(0, 0, "H") # Milestone 0 - print HAPPY
-    gw.set_square_letter(0, 1, "A")
-    gw.set_square_letter(0, 2, "P")
-    gw.set_square_letter(0, 3, "P")
-    gw.set_square_letter(0, 4, "Y")
-
 
 
 
