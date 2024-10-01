@@ -1,18 +1,15 @@
 ########################################
 # Name: Baily Livengood
-# Collaborators (if any):
-# GenAI Transcript (if any):
-# Estimated time spent (hr):
+# Collaborators (if any): Tutors
+# GenAI Transcript (if any): a small amount from chatgpt
+# Estimated time spent (hr): 8+
 # Description of any added extensions:
 ########################################
 
 from WordleGraphics import *  # WordleGWindow, N_ROWS, N_COLS, CORRECT_COLOR, PRESENT_COLOR, MISSING_COLOR, UNKNOWN_COLOR
 from english import * # ENGLISH_WORDS, is_english_word
 import random
-
 def wordle():
-# milestone 3
-    
     def random_word():
         word = ""
         while len(word) != 5:
@@ -20,45 +17,42 @@ def wordle():
             print(word)
         return word
     correct = random_word()
-    #random_word()
-    #    print(correct)
-    row = 0
+    
     # The main function to play the Wordle game.
     def enter_action():
         # What should happen when RETURN/ENTER is pressed.
-        
+        row = gw.get_current_row()
+        if row == N_ROWS: # ends game if failed
+            gw.show_message("GAME OVER. WORD = " + correct.upper())
+            return
+        row = gw.get_current_row()
         my_letters = ""
-        for i in range(0,5): 
+        for i in range(0,5): # turns your guess into a string + prints
             letter = gw.get_square_letter(row, i) 
             my_letters += letter  
         guess = my_letters.lower()
         print(f"Guess: {guess}")
         
-        if guess in ENGLISH_WORDS:
-            gw.show_message("True")
-            color_guess(guess)
-
-        else:
-            gw.show_message("Not in word list")
-
-    
-        
-        
-        def word_from_row(row: int) -> str:
-            word = ""
-            for col in range(5):
-                word += gw.get_square_letter(row, col)
-            return word.lower() 
-
+        if guess in ENGLISH_WORDS: # various messages
+            if guess == correct:
+                gw.show_message("YOU WIN!")
+                color_guess(guess)
+                return
+            if guess not in ENGLISH_WORDS:
+                gw.show_message("NOT IN WORD LIST")
+            else:
+                gw.show_message("GOOD GUESS!")
+                color_guess(guess)
+                gw.set_current_row(row + 1)
 
     
         
-    def color_guess(guess: str):
+    def color_guess(guess: str): # colors squares
+        row = gw.get_current_row()
         letters_left = correct
         for i in range (len(guess)):
             if guess[i] == correct[i]:
                 gw.set_square_color(row, i, CORRECT_COLOR)
-             #   letters_left = letters_left[:i] + "_" + letters_left[i+1:]
                 letters_left = letters_left.replace(guess[i],"_",1)
                 print(letters_left)
         
@@ -66,20 +60,11 @@ def wordle():
             if gw.get_square_color(row, i) != CORRECT_COLOR:
                 if guess[i] in correct and guess[i] in letters_left:
                     gw.set_square_color(row, i, PRESENT_COLOR)
-                #    letters_left = letters_left[:i] + "_" + letters_left[i+1:]
                     letters_left = letters_left.replace(guess[i],"_",1)
                     print(letters_left)
                 else:
                     gw.set_square_color(row, i, MISSING_COLOR)
-    def spaces_to_underscores(s:str) -> str:
-            new = ""
-            for index in range(len(s)):
-                if s[index] in " ":
-                    new += "_"
-                else:
-                    new += s[index]            
-                return new 
-
+        
     gw = WordleGWindow()
     gw.add_enter_listener(enter_action)
 
