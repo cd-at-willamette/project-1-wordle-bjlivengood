@@ -1,8 +1,8 @@
 ########################################
 # Name: Baily Livengood
-# Collaborators (if any): Tutors
-# GenAI Transcript (if any): a small amount from chatgpt
-# Estimated time spent (hr): 8+
+# Collaborators (if any): Tutor
+# GenAI Transcript (if any): Small amount of chatgpt
+# Estimated time spent (hr): 9
 # Description of any added extensions:
 ########################################
 
@@ -10,7 +10,7 @@ from WordleGraphics import *  # WordleGWindow, N_ROWS, N_COLS, CORRECT_COLOR, PR
 from english import * # ENGLISH_WORDS, is_english_word
 import random
 def wordle():
-    def random_word():
+    def random_word(): # Get random 5 letter word
         word = ""
         while len(word) != 5:
             word = random.choice(ENGLISH_WORDS)
@@ -22,18 +22,18 @@ def wordle():
     def enter_action():
         # What should happen when RETURN/ENTER is pressed.
         row = gw.get_current_row()
-        if row == N_ROWS: # ends game if failed
+        if row == N_ROWS: # End of game
             gw.show_message("GAME OVER. WORD = " + correct.upper())
             return
         row = gw.get_current_row()
         my_letters = ""
-        for i in range(0,5): # turns your guess into a string + prints
+        for i in range(0,5): # Turn guess into string
             letter = gw.get_square_letter(row, i) 
             my_letters += letter  
         guess = my_letters.lower()
         print(f"Guess: {guess}")
         
-        if guess in ENGLISH_WORDS: # various messages
+        if guess in ENGLISH_WORDS: # Various messages
             if guess == correct:
                 gw.show_message("YOU WIN!")
                 color_guess(guess)
@@ -44,10 +44,9 @@ def wordle():
                 gw.show_message("GOOD GUESS!")
                 color_guess(guess)
                 gw.set_current_row(row + 1)
-
     
         
-    def color_guess(guess: str): # colors squares
+    def color_guess(guess: str): # Color squares
         row = gw.get_current_row()
         letters_left = correct
         for i in range (len(guess)):
@@ -55,6 +54,7 @@ def wordle():
                 gw.set_square_color(row, i, CORRECT_COLOR)
                 letters_left = letters_left.replace(guess[i],"_",1)
                 print(letters_left)
+                
         
         for i in range (len(guess)):
             if gw.get_square_color(row, i) != CORRECT_COLOR:
